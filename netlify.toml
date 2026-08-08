@@ -5,7 +5,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  REACT_APP_API_URL = "https://boibabu-git-main-rajdips-projects-3d1f8c28.vercel.app"
+  REACT_APP_API_URL = "https://boibabufull.vercel.app"
   GENERATE_SOURCEMAP = "false"
 
 # Legacy URL redirects

@@ -8,28 +8,8 @@
   REACT_APP_API_URL = "https://boibabu-git-main-rajdips-projects-3d1f8c28.vercel.app"
   GENERATE_SOURCEMAP = "false"
 
-# Force HTTPS redirects
-[[redirects]]
-  from = "http://boibabu.in/*"
-  to = "https://boibabu.in/:splat"
-  status = 301
-  force = true
-
-# WWW to non-WWW redirects
-[[redirects]]
-  from = "https://www.boibabu.in/*"
-  to = "https://boibabu.in/:splat"
-  status = 301
-  force = true
-
-# Remove trailing slashes (except for root)
-[[redirects]]
-  from = "https://boibabu.in/*/"
-  to = "https://boibabu.in/:splat"
-  status = 301
-  force = true
-
 # Legacy URL redirects
+
 [[redirects]]
   from = "/book/:id"
   to = "/books/:id"
@@ -46,6 +26,7 @@
   status = 301
 
 # Case-insensitive redirects
+
 [[redirects]]
   from = "/Books"
   to = "/books"
@@ -66,7 +47,8 @@
   to = "/register"
   status = 301
 
-# SPA routing - must be last
+# SPA routing - MUST BE LAST
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

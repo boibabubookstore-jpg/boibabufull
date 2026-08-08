@@ -216,13 +216,12 @@ router.post('/register', authLimiter, [
     // Determine user role
     const userRole = email === 'admin@gmail.com' ? 'admin' : 'user';
 
-    // Create pending user (will be moved to User collection after email verification)
+    // Create pending user (plain password stored — hashed when real User is created after verification)
     const pendingUser = new PendingUser({ 
       name, 
       email, 
-      password,
-      role: userRole,
-      verificationToken: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+      password,   // plain — no pre-save hash in PendingUser
+      role: userRole
     });
     await pendingUser.save();
 
@@ -319,30 +318,17 @@ router.post('/verify-otp', [
       try {
         await OTP.verifyOTP(email, otp, 'email_verification');
         
-        // Create the actual user account
+        // Create the real user account — User model's pre-save will hash the password
         user = new User({
           name: pendingUser.name,
           email: pendingUser.email,
-          password: pendingUser.password, // Already hashed in PendingUser
+          password: pendingUser.password, // plain password — will be hashed by User pre-save
           role: pendingUser.role,
-          isEmailVerified: true // Mark as verified since they just verified
+          isEmailVerified: true
         });
+        await user.save();
 
-        // Manually save without triggering password hashing middleware
-        const userDoc = await User.collection.insertOne({
-          name: pendingUser.name,
-          email: pendingUser.email,
-          password: pendingUser.password, // Already hashed
-          role: pendingUser.role,
-          isEmailVerified: true,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        });
-
-        // Get the created user
-        user = await User.findById(userDoc.insertedId);
-
-        // Delete the pending user
+        // Delete the pending record
         await PendingUser.findByIdAndDelete(pendingUser._id);
 
         // Send welcome email (optional)

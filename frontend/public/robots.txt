@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# Allow all search engines to crawl the site
+Allow: /books
+Allow: /books/*
+Allow: /books?category=*
+Allow: /books?search=*
+Allow: /books?featured=*
+Allow: /books?bestseller=*
+Allow: /books?newArrival=*
+Allow: /login
+Allow: /register
+
+# Disallow admin and seller areas from search engines
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /seller
+Disallow: /seller/*
+
+# Disallow user-specific pages
+Disallow: /profile
+Disallow: /orders
+Disallow: /cart
+Disallow: /wishlist
+Disallow: /checkout
+
+# Disallow pagination beyond page 10 to prevent thin content
+Disallow: /books?*page=1[1-9]
+Disallow: /books?*page=[2-9][0-9]
+
+# Allow sitemap
+Sitemap: https://boibabu.in/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1

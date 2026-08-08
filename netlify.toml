@@ -1,0 +1,73 @@
+[build]
+  base = "frontend"
+  command = "npm ci && npm run build"
+  publish = "build"
+
+[build.environment]
+  NODE_VERSION = "20"
+  REACT_APP_API_URL = "https://boibabu-git-main-rajdips-projects-3d1f8c28.vercel.app"
+  GENERATE_SOURCEMAP = "false"
+
+# Force HTTPS redirects
+[[redirects]]
+  from = "http://boibabu.in/*"
+  to = "https://boibabu.in/:splat"
+  status = 301
+  force = true
+
+# WWW to non-WWW redirects
+[[redirects]]
+  from = "https://www.boibabu.in/*"
+  to = "https://boibabu.in/:splat"
+  status = 301
+  force = true
+
+# Remove trailing slashes (except for root)
+[[redirects]]
+  from = "https://boibabu.in/*/"
+  to = "https://boibabu.in/:splat"
+  status = 301
+  force = true
+
+# Legacy URL redirects
+[[redirects]]
+  from = "/book/:id"
+  to = "/books/:id"
+  status = 301
+
+[[redirects]]
+  from = "/category/:category"
+  to = "/books?category=:category"
+  status = 301
+
+[[redirects]]
+  from = "/search/:query"
+  to = "/books?search=:query"
+  status = 301
+
+# Case-insensitive redirects
+[[redirects]]
+  from = "/Books"
+  to = "/books"
+  status = 301
+
+[[redirects]]
+  from = "/Books/*"
+  to = "/books/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/LOGIN"
+  to = "/login"
+  status = 301
+
+[[redirects]]
+  from = "/REGISTER"
+  to = "/register"
+  status = 301
+
+# SPA routing - must be last
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
